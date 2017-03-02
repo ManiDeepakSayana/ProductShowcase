@@ -1,0 +1,103 @@
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+	<header class="persona-header mdl-layout__header">
+		<div class="mdl-layout__header-row">
+			<!-- Title -->
+			<span class="persona-title mdl-layout-title">Products</span>
+			<!-- Add spacer, to align navigation to the right -->
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height" style="width:200px">
+				<input style="display: inline-block;color: black;width:162px;" class=" mdl-textfield__input_select mdl-textfield__input" type="text" id="sample2" ng-model="categoryValue" ng-change="categoryFilter()" readonly tabIndex="-1">
+				<label for="sample2">
+					<i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+				</label>
+				<label for="sample2" class="mdl-textfield__label">SELECT CATEGORY</label>
+				<ul for="sample2" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+					<li class="mdl-menu__item" data-val="DE">All</li>
+					<li class="mdl-menu__item" data-val="DE">Trending</li>
+					<li class="mdl-menu__item" data-val="BY">Lifestyle</li>
+					<li class="mdl-menu__item" data-val="RU">Home Décor</li>
+					<li class="mdl-menu__item" data-val="RU">Electronics</li>
+				</ul>
+			</div>
+			<button ng-click="changeType('All')" ng-class="{'mdl-button--colored':AllCat}" style="background-color: lightgrey;" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+				<i class="fa fa-user" aria-hidden="true"></i>
+			</button>&nbsp;
+			<button ng-click="changeType('Men')" ng-class="{'mdl-button--colored':MenCat}" style="background-color: lightgrey;" class="mdl-button mdl-js-button mdl-button--icon ">
+				<i class="fa fa-male" aria-hidden="true"></i>
+			</button>&nbsp;
+			<button ng-click="changeType('Women')" ng-class="{'mdl-button--colored':WomenCat}" style="background-color: lightgrey;" class="mdl-button mdl-js-button mdl-button--icon ">
+				<i class="fa fa-female" aria-hidden="true"></i>
+			</button>&nbsp;
+			<button ng-click="changeType('Child')" ng-class="{'mdl-button--colored':ChildCat}" style="background-color: lightgrey;" class="mdl-button mdl-js-button mdl-button--icon ">
+				<i class="fa fa-child" aria-hidden="true"></i>
+			</button>&nbsp;
+			<button ng-click="changeType('Youth')" ng-class="{'mdl-button--colored':YouthCat}" style="background-color: lightgrey;" class="mdl-button mdl-js-button mdl-button--icon ">
+				<i class="fa fa-user-circle-o" aria-hidden="true"></i>
+			</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input class="mdl-slider mdl-js-slider" ng-change="priceFilter()" type="range" min="0" max="300" ng-model="priceRange" tabindex="0"></input>
+			<span style="color:black">$&nbsp;{{priceRange}}</span>
+			<div class="mdl-layout-spacer"></div>
+			<!-- Navigation -->
+			<!--
+          <nav class="persona-navigation mdl-navigation mdl-layout--large-screen-only">
+            <a class="mdl-navigation__link" href="">Link</a>
+          </nav>
+          -->
+
+		</div>
+	</header>
+
+	<!-- Content -->
+	<main class="mdl-layout__content">
+		<!-- Persona Card Grid -->
+
+		<div class="container-fluid">
+			<div class="demo-container">
+				<p>
+				</p>
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--1-col">
+
+						<a href="javascript:void(0)" ng-if="disableBackward == false" ng-click="previousdata()"><i style="padding-top: 280%;" class="fa fa-arrow-left fa-3x" aria-hidden="true"></i></a>
+
+					</div>
+					<div class="mdl-cell mdl-cell--10-col">
+						<div gridster="gridsterOpts">
+							<ul>
+								<li ng-click="goClickCard()" ng-mouseleave="mouseOverAction = false" ng-if="item.price <= priceRange" ng-mouseover="mouseOverAction = true" class="style_prevu_kit" gridster-item="item" ng-repeat="item in standardItems" ng-init="initRand()">
+									<div ng-style="{'height': 'inherit',
+    'width': 'inherit'}">
+										<div ng-style="{'background-image':'url('+item.img+')','background-size':'contain','background-repeat':' no-repeat','background-position-x':'50%','background-position-y':'50%','height': '55%',
+    'width': '85%'}"></div>
+										<div>{{item.name}}</div>
+										<div ng-if="mouseOverAction == true">$&nbsp;<s>{{(item.price) + correction}}</s></div>
+										<div><b>$&nbsp;{{item.price}}</b></div>
+										<div style="color:green" ng-if="mouseOverAction == true">Amazon</div>
+									</div>
+
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="mdl-cell mdl-cell--1-col">
+
+						<a href="javascript:void(0)" ng-if="disableForward == false" ng-click="nextdata()"><i style="padding-top: 280%;float: right;" class="fa fa-arrow-right fa-3x" aria-hidden="true"></i></a>
+
+					</div>
+				</div>
+
+
+				<h2></h2>
+
+			</div>
+		</div>
+
+
+		<!-- /Card -->
+
+		<!-- /Persona Card Grid -->
+	</main>
+	<!-- /Content -->
+
+</div>
