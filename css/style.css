@@ -7,25 +7,21 @@
 	background-color: #ffffff !important;
 	box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1) !important;
 }
-
 .persona-header .material-icons {
 	color: #767777 !important;
 	/* Keep this !important */
 }
-
 .persona-header .mdl-layout__drawer-button {
 	background: transparent !important;
 	color: #767777 !important;
 	line-height: 52px;
 }
-
 .persona-header .mdl-navigation__link {
 	color: #767777 !important;
 	font-weight: 500 !important;
 	font-size: 15px !important;
 	text-transform: uppercase;
 }
-
 
 /* Navigation */
 
@@ -37,18 +33,15 @@
 	/*Keep this !important*/
 	border-bottom: 4px solid transparent !important;
 }
-
 .persona-navigation .mdl-navigation__link:hover {
 	border-bottom: 4px solid #00bcd4 !important;
 }
-
 
 /* Title */
 
 .persona-title {
 	color: #767777 !important;
 }
-
 
 /**
 * Persona Card Grid / Cards
@@ -61,24 +54,20 @@
 	margin-right: auto;
 }
 
-
 /* Cards */
 
 .persona-card-wide.mdl-card {
 	width: 360px;
 }
-
 .persona-card-wide > .mdl-card__title {
 	color: #fff;
 	height: 200px;
 	background: url('https://getmdl.io/assets/demos/welcome_card.jpg') center / cover;
 	background-color: #00bcd4;
 }
-
 .persona-card-wide > .mdl-card__menu {
 	color: #fff;
 }
-
 .demo-card-square.mdl-card {
 	width: 320px;
 	height: 320px;
@@ -86,26 +75,21 @@
 	margin: 1rem;
 	position: relative;
 }
-
 .demo-card-square.mdl-card:hover {
 	box-shadow: 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12), 0 5px 5px -3px rgba(0, 0, 0, .2);
 }
-
 .demo-card-square > .mdl-card__title {
 	color: #fff;
 	background: #03a9f4;
 }
-
 .demo-card-square > .mdl-card__accent {
 	background: #ff9800;
 }
-
 body {
 	font-family: 'Helvetica Neue', Arial, sans-serif;
 	background: #004756;
 	color: #fff;
 }
-
 .gridster .gridster-item {
 	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
@@ -114,7 +98,6 @@ body {
 	background: #ffffff;
 	padding: 10px;
 }
-
 .mdl-textfield__input_select {
 	border: none;
 	border-bottom: 1px solid rgba(0, 0, 0, .12);
@@ -128,7 +111,6 @@ body {
 	/* text-align: left; */
 	/* color: inherit; */
 }
-
 .style_prevu_kit {
 	display: inline-block;
 	position: relative;
@@ -141,10 +123,9 @@ body {
 	transition: all 200ms ease-in;
 	transform: scale(1);
 }
-
 .style_prevu_kit:hover {
 	z-index: 6;
-	height: 235px !important;
+	height: 202px !important;
 	-webkit-transition: all 200ms ease-in;
 	-webkit-transform: scale(1.2);
 	-ms-transition: all 200ms ease-in;
@@ -153,4 +134,20 @@ body {
 	-moz-transform: scale(1.2);
 	transition: all 200ms ease-in;
 	transform: scale(1.2);
+	border: 2px solid black;
+}
+.style_prevu_kit .hoverContainer {
+	margin: 0;
+	padding: 0;
+	width: 100% !important;
+	height: 100% !important;
+}
+.switchColor {
+	color: #ff6565 !important;
+}
+.selectColor {
+	color: #9c9c9c !important;
+}
+.mdl-button:hover {
+	background-color: transparent !important;
 }

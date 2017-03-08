@@ -1,10 +1,10 @@
 angular.module('app', ['gridster', 'ui.bootstrap', 'ngRoute'])
 
-.directive('integer', function() {
+.directive('integer', function () {
 	return {
 		require: 'ngModel',
-		link: function(scope, ele, attr, ctrl) {
-			ctrl.$parsers.unshift(function(viewValue) {
+		link: function (scope, ele, attr, ctrl) {
+			ctrl.$parsers.unshift(function (viewValue) {
 				if (viewValue === '' || viewValue === null || typeof viewValue === 'undefined') {
 					return null;
 				}
@@ -14,8 +14,8 @@ angular.module('app', ['gridster', 'ui.bootstrap', 'ngRoute'])
 	};
 })
 
-.controller('MainCtrl', function($scope, $location, $window) {
-	$scope.$on('$locationChangeStart', function(e, next, current) {
+.controller('MainCtrl', function ($scope, $location, $window) {
+	$scope.$on('$locationChangeStart', function (e, next, current) {
 		$scope.page = next.split('/').splice(-1);
 		$scope.styleUrl = 'demo/' + $scope.page + '/style.css'
 	});
@@ -46,24 +46,62 @@ angular.module('app', ['gridster', 'ui.bootstrap', 'ngRoute'])
 			handles: ['n', 'e', 's', 'w', 'se', 'sw']
 		}
 	};
-	$scope.priceFilter = function() {
-		if ($scope.priceRange != 300) {
+	$scope.range = 10000;
+	$scope.priceFilter = function () {
+
+		switch ($scope.priceRange) {
+			case "0":
+				$scope.range = 25;
+				break;
+			case "2":
+				$scope.range = 50;
+				break;
+			case "4":
+				$scope.range = 100;
+				break;
+			case "6":
+				$scope.range = 1000;
+				break;
+			case "8":
+				$scope.range = 10000;
+				break;
+
+		};
+		if ($scope.range != 10000) {
 			if ($scope.categoryValue != "All") {
 				var tempArr = [];
 				var col = 0;
 				var row = 0;
-				angular.forEach($scope.standardItems, function(value, key) {
+				var catData = [];
+				var main = angular.copy($scope.standardItemsMain);
+				if ($scope.toValue == "") {
+					angular.forEach(main, function (value, key) {
+						if (value.category == $scope.categoryValue) {
+							catData.push(value);
+						}
+					});
+				} else {
+					angular.forEach(main, function (value, key) {
+						if (value.category == $scope.categoryValue && value.to == $scope.toValue) {
+							catData.push(value);
+						}
+					});
+				}
+
+				angular.forEach(catData, function (value, key) {
 					var dataSet = angular.copy(value);
-					if (col == 6) {
-						row++;
-						col = 0;
+					if (dataSet.price <= $scope.range) {
+						if (col == 6) {
+							row++;
+							col = 0;
+						}
+						dataSet.sizeX = 1;
+						dataSet.sizeY = 1;
+						dataSet.row = row;
+						dataSet.col = col;
+						tempArr.push(dataSet);
+						col++;
 					}
-					dataSet.sizeX = 1;
-					dataSet.sizeY = 1;
-					dataSet.row = row;
-					dataSet.col = col;
-					tempArr.push(dataSet);
-					col++;
 				});
 				$scope.standardItems = angular.copy(tempArr);
 				$scope.disableForward = true;
@@ -72,18 +110,23 @@ angular.module('app', ['gridster', 'ui.bootstrap', 'ngRoute'])
 				var tempArr = [];
 				var col = 0;
 				var row = 0;
-				angular.forEach($scope.standardItemsMain, function(value, key) {
+				var main = angular.copy($scope.standardItemsMain);
+
+				angular.forEach(main, function (value, key) {
 					var dataSet = angular.copy(value);
-					if (col == 6) {
-						row++;
-						col = 0;
+					if (dataSet.price <= $scope.range) {
+						if (col == 6) {
+							row++;
+							col = 0;
+						}
+						dataSet.sizeX = 1;
+						dataSet.sizeY = 1;
+						dataSet.row = row;
+						dataSet.col = col;
+						tempArr.push(dataSet);
+						col++;
 					}
-					dataSet.sizeX = 1;
-					dataSet.sizeY = 1;
-					dataSet.row = row;
-					dataSet.col = col;
-					tempArr.push(dataSet);
-					col++;
+
 				});
 				$scope.standardItems = angular.copy(tempArr);
 				$scope.disableForward = true;
@@ -96,13 +139,16 @@ angular.module('app', ['gridster', 'ui.bootstrap', 'ngRoute'])
 			$scope.disableBackward = true;
 		}
 
+		setTimeout(function () {
+			$scope.$apply();
+		}, 500);
 
 	};
-	$scope.goClickCard = function() {
+	$scope.goClickCard = function () {
 		$window.location.href = 'http://www.amazon.in/';
 		//$location.url('http://www.amazon.in/');
 	};
-	$scope.changeType = function(value) {
+	$scope.changeType = function (value) {
 		switch (value) {
 			case "All":
 				$scope.AllCat = true;
@@ -152,28 +198,52 @@ angular.module('app', ['gridster', 'ui.bootstrap', 'ngRoute'])
 		}
 	}
 	$scope.currpos = 0;
-	$scope.categoryFilter = function() {
+	$scope.categoryFilter = function () {
 		if ($scope.categoryValue != "All") {
-			var tempArr = [];
-			var col = 0;
-			var row = 0;
-			angular.forEach($scope.standardItemsMain, function(value, key) {
-				var dataSet = angular.copy(value);
-				if (dataSet.category == $scope.categoryValue && dataSet.to == $scope.toValue) {
-					if (col == 6) {
-						row++;
-						col = 0;
+			if ($scope.toValue == "") {
+				var tempArr = [];
+				var col = 0;
+				var row = 0;
+				angular.forEach($scope.standardItemsMain, function (value, key) {
+					var dataSet = angular.copy(value);
+					if (dataSet.category == $scope.categoryValue) {
+						if (col == 6) {
+							row++;
+							col = 0;
+						}
+						dataSet.sizeX = 1;
+						dataSet.sizeY = 1;
+						dataSet.row = row;
+						dataSet.col = col;
+						tempArr.push(dataSet);
+						col++;
 					}
-					dataSet.sizeX = 1;
-					dataSet.sizeY = 1;
-					dataSet.row = row;
-					dataSet.col = col;
-					tempArr.push(dataSet);
-					col++;
-				}
 
 
-			});
+				});
+			} else {
+				var tempArr = [];
+				var col = 0;
+				var row = 0;
+				angular.forEach($scope.standardItemsMain, function (value, key) {
+					var dataSet = angular.copy(value);
+					if (dataSet.category == $scope.categoryValue && dataSet.to == $scope.toValue) {
+						if (col == 6) {
+							row++;
+							col = 0;
+						}
+						dataSet.sizeX = 1;
+						dataSet.sizeY = 1;
+						dataSet.row = row;
+						dataSet.col = col;
+						tempArr.push(dataSet);
+						col++;
+					}
+
+
+				});
+			}
+
 			$scope.standardItems = [];
 			$scope.standardItems = angular.copy(tempArr);
 			$scope.disableForward = true;
@@ -183,7 +253,7 @@ angular.module('app', ['gridster', 'ui.bootstrap', 'ngRoute'])
 				var tempArr = [];
 				var col = 0;
 				var row = 0;
-				angular.forEach($scope.standardItemsMain, function(value, key) {
+				angular.forEach($scope.standardItemsMain, function (value, key) {
 					var dataSet = angular.copy(value);
 					if (dataSet.to == $scope.toValue) {
 						if (col == 6) {
@@ -215,7 +285,7 @@ angular.module('app', ['gridster', 'ui.bootstrap', 'ngRoute'])
 		}
 
 	}
-	$scope.nextdata = function() {
+	$scope.nextdata = function () {
 		$scope.currpos = $scope.currpos + 11;
 		var currLength = angular.copy($scope.currpos);
 		currLength = currLength + 11;
@@ -230,7 +300,7 @@ angular.module('app', ['gridster', 'ui.bootstrap', 'ngRoute'])
 		}
 
 	};
-	$scope.previousdata = function() {
+	$scope.previousdata = function () {
 		console.log($scope.currpos);
 		$scope.currpos = $scope.currpos - 11;
 		var currLength = angular.copy($scope.currpos);
@@ -319,11 +389,11 @@ angular.module('app', ['gridster', 'ui.bootstrap', 'ngRoute'])
 		row: 0,
 		col: 5,
 		data: 6,
-		img: "images/4.jpg",
-		name: "Sofa",
+		img: "images/6.jpg",
+		name: "Child Dress",
 		price: 180.00,
-		category: "Home Décor",
-		to: ""
+		category: "Lifestyle",
+		to: "Child"
 	}, {
 		sizeX: 2,
 		sizeY: 1,
@@ -533,6 +603,28 @@ angular.module('app', ['gridster', 'ui.bootstrap', 'ngRoute'])
 		price: 210.00,
 		category: "Lifestyle",
 		to: "Women"
+	}, {
+		sizeX: 1,
+		sizeY: 1,
+		row: 0,
+		col: 4,
+		data: 5,
+		img: "images/6.jpg",
+		name: "Child Dress",
+		price: 50.00,
+		category: "Lifestyle",
+		to: "Child"
+	}, {
+		sizeX: 1,
+		sizeY: 1,
+		row: 0,
+		col: 5,
+		data: 6,
+		img: "images/6.jpg",
+		name: "Child Dress",
+		price: 180.00,
+		category: "Lifestyle",
+		to: "Child"
 	}];
 
 	$scope.standardItems = $scope.standardItemsMain.slice(0, 11);
